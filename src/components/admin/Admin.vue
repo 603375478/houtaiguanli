@@ -9,39 +9,24 @@
           <el-row class="tac">
               <el-col :span="24">
                 <el-menu
-                  default-active="1"
+                  default-active="2"
                   class="el-menu-vertical-demo"
                   background-color="#fbfbfb"
                   text-color="#888"
                   active-text-color="#000"
                   :router=true
-                  :default-openeds="['1']"
+                  :default-openeds='defaultOpeneds'
                   @open="handleOpen"
                   @close="handleClose">
-                  <el-submenu index="1">
+                  <el-submenu v-for="(val,index) in navigation" :key="index" :index="''+(index+1)">
                     <template slot="title">
-                      <i class="el-icon-location"></i>
-                      <span>系统设置</span>
+                      <i :class="val.icon"></i>
+                      <span>{{val.title}}</span>
                     </template>
-                      <el-menu-item index="/Admin/AdminSystem">基本设置</el-menu-item>
-                      <el-menu-item index="1-2">用户管理</el-menu-item>
+                      <el-menu-item v-for="(childrenValue,index) in val.children" :key="index" :index="childrenValue.path">{{childrenValue.title}}</el-menu-item>
                   </el-submenu>
-                  <el-submenu index="2">
-                    <template slot="title">
-                      <i class="el-icon-location"></i>
-                      <span>信息管理</span>
-                    </template>
-                      <el-menu-item index="1-1">选项1</el-menu-item>
-                      <el-menu-item index="1-2">选项2</el-menu-item>
-                  </el-submenu>
-                  <el-submenu index="3">
-                    <template slot="title">
-                      <i class="el-icon-location"></i>
-                      <span>友情链接</span>
-                    </template>
-                      <el-menu-item index="1-1">选项1</el-menu-item>
-                      <el-menu-item index="1-2">选项2</el-menu-item>
-                  </el-submenu>
+
+ 
                 </el-menu>
               </el-col>
           </el-row>
@@ -62,14 +47,29 @@ export default {
       system: {
         logo: require("../../assets/logo.png"),
         title:"0718后台管理系统"
-      }
+      },
+      defaultOpeneds:['1'],
+      navigation:[
+         {id:1,title:"系统设置",path:"/Admin",parent_id:0,icon:"el-icon-setting",children:[
+            {id:2,title:"网站基本设置",path:"/Admin/AdminSystem",parent_id:1}
+         ]},
+         {id:3,title:"门派管理",path:"/Admin/AdminUser",parent_id:0,icon:"el-icon-service",children:[
+            {id:4,title:"掌门人管理",path:"/Admin/AdminRoot",parent_id:3},
+            {id:5,title:"门派成员管理",path:"/Admin/AdminUser",parent_id:3},
+            {id:9,title:"门派注册管理",path:"/Admin/AdminFaction",parent_id:3},
+         ]},
+         {id:6,title:"信息管理",path:"/Admin/AdminInfo",parent_id:0,icon:"el-icon-document",children:[
+            {id:7,title:"信息列表",path:"/Admin/AdminInfo",parent_id:6},
+            {id:8,title:"信息添加",path:"/Admin/AdminInfoAdd",parent_id:6}
+         ]}
+      ]
      
     };
   },
    methods: {
       handleOpen(key, keyPath) {
         console.log(key, keyPath);
-
+        this.defaultOpeneds = keyPath
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
@@ -162,5 +162,11 @@ export default {
     height: 178px;
     display: block;
   }
-
+.el-form {
+  border: 1px solid #ddd;
+  box-shadow: 3px 3px 3px #eee;
+  padding: 15px;
+  margin: 25px;
+  border-radius: 5px;
+}
 </style>

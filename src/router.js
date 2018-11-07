@@ -1,13 +1,25 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
 import Index from './components/Index.vue'
 import Login from './components/Login.vue'
 import Admin from './components/admin/Admin.vue'
 import AdminIndex from './components/admin/AdminIndex.vue'
 import AdminSystem from './components/admin/AdminSystem.vue'
+import AdminRoot from './components/admin/AdminRoot.vue'
+import AdminUser from './components/admin/AdminUser.vue'
+import AdminFaction from './components/admin/AdminFaction.vue'
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path:'/HelloWorld',
+        name:'HelloWorld',
+        component:HelloWorld,
+        meta:{
+            title:"测试页面"
+        }
+    },
     {
         path:'/',
         name:'Index',
@@ -46,6 +58,27 @@ const routes = [
             component: AdminSystem,
             meta:{
                 title:"网站基本信息设置"
+            },
+        },
+        {
+            path: '/Admin/AdminRoot',
+            component: AdminRoot,
+            meta:{
+                title:"掌门人管理"
+            },
+        },
+        {
+            path: '/Admin/AdminUser',
+            component: AdminUser,
+            meta:{
+                title:"门派成员管理"
+            },
+        },
+        {
+            path: '/Admin/AdminFaction',
+            component: AdminFaction,
+            meta:{
+                title:"门派注册管理"
             },
         }
         ]
